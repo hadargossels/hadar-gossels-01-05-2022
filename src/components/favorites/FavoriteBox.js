@@ -5,10 +5,13 @@ import CloseIcon from '@material-ui/icons/Close';
 import clsx from 'clsx'
 
 import * as weatherActions from '../../redux/Weather/weatherSlice'
+import * as generalActions from '../../redux/General/generalSlice'
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 export default function FavoriteBox({ favorite }) {
     const classes = useStyles()
+      const navigate = useNavigate();
     const dispatch = useDispatch()
     const favoriteWeather = useSelector(state => state.weather?.favoriteWeather?.[favorite.Key])
     const system = useSelector(state => state.general.system)
@@ -16,14 +19,23 @@ export default function FavoriteBox({ favorite }) {
 
     useEffect(() => {
         dispatch(weatherActions.getFavoriteCurrentWeater(favorite.Key))
-    }, [favorite.Key])
+    }, [favorite.Key, dispatch])
+
+    const removeFromFavorites = () => {
+        dispatch(generalActions.removeFromFavorites({key: favorite.Key}))
+    }
+
+    const goToFavorite = () => {
+        dispatch(generalActions.setLocationFull(favorite))
+        navigate('/home')
+    }
 
 
     return (
-        <Grid container alignItems='center' justifyContent='space-evenly' className={classes.weatherBox}>
+        <Grid container alignItems='center' justifyContent='space-evenly' className={classes.favoriteBox} onClick={goToFavorite}>
             <Grid item lg={12}>
                 <Grid container justifyContent='flex-end'>
-                    <IconButton>
+                    <IconButton onClick={removeFromFavorites}>
                         <CloseIcon />
                     </IconButton>
                 </Grid>

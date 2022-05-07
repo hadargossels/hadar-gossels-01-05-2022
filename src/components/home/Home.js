@@ -19,9 +19,9 @@ export default function Home() {
     const dispatch = useDispatch()
     const locations = useSelector(state => state.general?.locations)
     const locationInput = useSelector(state => state.general?.locationInput)
-    
+
     const locationFull = useSelector(state => state.general?.locationFull)
-    
+
     const system = useSelector(state => state.general.system)
     const favorites = useSelector(state => state.general.favorites)
 
@@ -30,14 +30,14 @@ export default function Home() {
     const forecast = useSelector(state => state.weather.forecast)
 
     const temp = currentWeather?.Temperature?.[system]
-    const method = favorites.hasOwnProperty(locationFull?.Key) ? 'remove' : 'add'    
+    const method = favorites.hasOwnProperty(locationFull?.Key) ? 'remove' : 'add'
 
     useEffect(() => {
         if (locationFull && locationFull?.Key) {
             dispatch(weatherActions.getCurrentWeater(locationFull.Key))
             dispatch(weatherActions.getForecast(locationFull.Key))
         }
-    }, [locationFull])
+    }, [locationFull, system, dispatch])
 
     const handleLocationSearch = (e, newInputValue) => {
         dispatch(generalActions.getLocations(newInputValue))
@@ -53,9 +53,9 @@ export default function Home() {
 
     const handleFavorites = () => {
         if (method === 'add') {
-            dispatch(generalActions.addToFavorites({key: locationFull?.Key, loction: locationFull}))
+            dispatch(generalActions.addToFavorites({ key: locationFull?.Key, loction: locationFull }))
         } else if (method === 'remove') {
-            dispatch(generalActions.removeFromFavorites({key: locationFull?.Key}))
+            dispatch(generalActions.removeFromFavorites({ key: locationFull?.Key }))
         }
     }
 
@@ -98,12 +98,12 @@ export default function Home() {
                             <Grid container justifyContent='space-between' alignItems='center'>
                                 <Grid item >
                                     <Grid container alignItems='center'>
-                                        <Box component='span'><LocationOnOutlinedIcon className={classes.locationIcon} /></Box>
+                                        <Box component='span'><LocationOnOutlinedIcon className={classes.icons} /></Box>
                                         <Box component='span' className={classes.city}>{`${locationFull?.LocalizedName}, ${locationFull?.Country?.LocalizedName}`}</Box>
                                     </Grid>
                                 </Grid>
                                 <Grid item>
-                                    <IconButton onClick={handleFavorites} className={classes.favoriteBtn}>
+                                    <IconButton onClick={handleFavorites} className={classes.icons}>
                                         {method === 'add' ?
                                             <StarOutlineIcon className={classes.favoriteIcon} /> :
                                             <StarIcon className={classes.favoriteIcon} />}

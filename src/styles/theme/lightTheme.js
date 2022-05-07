@@ -15,6 +15,8 @@ export const lightThemeColors = {
     primary: {
         main: '#ffffff',
         text: '#000000',
+        divider: '#CBD6D9',
+        shadow: '#242424',
         header: '#f9f9f9',
         widgetHeader: '#F5F5F5',
         settlementHeader: '#F9F9F9'

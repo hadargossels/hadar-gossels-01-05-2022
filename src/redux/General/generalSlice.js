@@ -30,6 +30,7 @@ export const generalSlice = createSlice({
         themeMode: 'light',
         system: 'Metric',
         favorites: {},
+        modal: false
     },
     reducers: {
         setLocations: (state, action) => {
@@ -53,11 +54,20 @@ export const generalSlice = createSlice({
             let favoritesCopy = {...state.favorites}
             delete favoritesCopy[action.payload.key] 
             state.favorites = favoritesCopy
+            saveToSessionStorage('FAVORITES', favoritesCopy)
         },
         setFavorites: (state, action) => {
             state.favorites = action.payload
-        }
-
+        },
+        toggleModal: (state, action) => {
+            state.modal = action.payload
+        },
+        setTheme: (state, action) => {
+            state.themeMode = action.payload
+        },
+        setSystem: (state, action) => {
+            state.system = action.payload
+        },
     },
 });
 
@@ -82,7 +92,10 @@ export const {
     setLocationFull,
     addToFavorites,
     removeFromFavorites,
-    setFavorites
+    setFavorites,
+    toggleModal,
+    setTheme,
+    setSystem
 } = generalSlice.actions;
 
 

@@ -13,7 +13,6 @@ import Favorites from './components/favorites/Favorites';
 import NavBar from './components/NavBar';
 
 import * as generalActions from './redux/General/generalSlice'
-import { saveToSessionStorage } from './utils/helperFunctions';
 
 function App() {
   const dispatch = useDispatch()
@@ -31,6 +30,11 @@ function App() {
             backgroundColor: 'transparent',
           },
         },
+      },
+      MuiSvgIcon: {
+        root: {
+          color: mainPalette.primary.text,
+        }
       },
       MuiTypography: {
         root: {
@@ -58,7 +62,29 @@ function App() {
             color: mainPalette.primary.main,
           },
         },
-      },      
+      },
+      MuiAppBar: {
+        colorPrimary: {
+          color: mainPalette.primary.text,
+          backgroundColor: mainPalette.primary.main,
+        }
+      },
+      MuiDialog: {
+        paperFullWidth: {
+          backgroundColor: mainPalette.background.container
+        }
+      },
+      MuiFormLabel: {
+        root: {
+          color: mainPalette.primary.text
+        }
+      },
+      MuiDivider: {
+        root: {
+          backgroundColor: mainPalette.primary.divider,
+          margin: '15px 0px !important'
+        }
+      },
       MuiCssBaseline: {
         '@global': {
           body: {
@@ -97,7 +123,7 @@ function App() {
     }
 
   })
-  
+
 
   return (
     <ThemeProvider theme={theme}>
